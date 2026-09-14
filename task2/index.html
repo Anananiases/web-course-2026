@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Rouge — Floral Atelier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="header">
+    <div class="logo">Maison Rouge</div>
+
+    <!-- Гамбургер для мобилки -->
+    <span class="burger" aria-hidden="true"></span>
+
+    <!-- Навигация (Flexbox) -->
+    <nav class="nav">
+      <a href="#">Collections</a>
+      <a href="#">Gallery</a>
+      <a href="#">Boutique</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ГЕРОЙ -->
+  <section class="hero">
+    <div class="hero__text">
+      <p class="eyebrow">Maison Rouge · Floral Atelier</p>
+      <h1>Искусство цвета и формы</h1>
+      <p class="hero__desc">
+        Авторские букеты и floral-декор для особых событий.
+        Собираем композиции, которые живут дольше одного вечера.
+      </p>
+      <a href="#contact" class="btn">Оставить заявку</a>
+    </div>
+    <div class="hero__image">
+      <img src="img/hero.jpg" alt="Белые розы на бордовом фоне">
+    </div>
+  </section>
+
+  <!-- ФИЛОСОФИЯ -->
+  <section class="philosophy">
+    <div class="philosophy__label">
+      <span>Philosophy</span>
+      <h2>Flowers as Architecture</h2>
+    </div>
+    <div class="philosophy__text">
+      <p>
+        Каждый букет — это конструкция: линия, объём, контраст.
+        Мы работаем с сезонными цветами и подбираем палитру под пространство.
+      </p>
+    </div>
+  </section>
+
+  <!-- КОЛЛЕКЦИИ (Grid) -->
+  <section class="collections">
+    <h2 class="section-title">Bouquets that Stay with You</h2>
+
+    <div class="cards">
+      <article class="card">
+        <img src="img/card1.jpg" alt="Букет тёмных роз">
+        <h3>The Noir Edit</h3>
+        <p>Глубокие бордовые оттенки и бархатные текстуры.</p>
+      </article>
+
+      <article class="card">
+        <img src="img/card2.jpg" alt="Монохромный букет">
+        <h3>Mono Rouge</h3>
+        <p>Один цветок, одна линия, максимальная выразительность.</p>
+      </article>
+
+      <article class="card">
+        <img src="img/card3.jpg" alt="Праздничный букет">
+        <h3>Special Occasions</h3>
+        <p>Композиции для свадеб, ужинов и витрин.</p>
+      </article>
+    </div>
+
+    <a href="#" class="link-more">View all collections →</a>
+  </section>
+
+  <!-- БАННЕР -->
+  <section class="banner">
+    <p class="eyebrow">Signature Bouquet</p>
+    <h2>The Bouquet Edit</h2>
+    <a href="#contact" class="btn btn--light">Shop now</a>
+  </section>
+
+  <!-- ФОРМА -->
+  <section class="contact" id="contact">
+    <h2 class="section-title">Свяжитесь с нами</h2>
+
+    <form class="form">
+      <label>
+        <span>Имя</span>
+        <input type="text" name="name" placeholder="Ваше имя" required>
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </label>
+
+      <label>
+        <span>Сообщение</span>
+        <textarea name="message" rows="4" placeholder="Расскажите о вашем событии"></textarea>
+      </label>
+
+      <button type="submit" class="btn">Отправить</button>
+    </form>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer class="footer">
+    <p>© 2025 Maison Rouge. Floral Atelier.</p>
+    <nav class="footer__nav">
+      <a href="#">Instagram</a>
+      <a href="#">Telegram</a>
+      <a href="#">Pinterest</a>
+    </nav>
+  </footer>
+
+</body>
+</html>
