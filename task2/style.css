@@ -488,4 +488,41 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
+
+
+
+
+
+
+
+
+
+/* Открытие меню по клику на гамбургер (без JS) */
+@media (max-width: 767px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 12px;
+  }
+
+  .header:focus-within .nav {
+    display: flex;
+  }
+
+  .nav a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(244, 233, 220, 0.1);
+  }
+}
+
+
 }
