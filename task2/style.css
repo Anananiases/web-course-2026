@@ -482,4 +482,10 @@ textarea:focus-visible {
     animation: none !important;
     scroll-behavior: auto !important;
   }
+
+  /* Отступ при скролле к якорям — чтобы sticky-шапка не перекрывала заголовки */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
 }
