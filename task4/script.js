@@ -67,6 +67,66 @@ function countBullsAndCows(secret, guess) {
   return { bulls, cows };
 }
 
+function pluralize(n, one, few, many) {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+  return many;
+}
+
+function formatResult({ bulls, cows }) {
+  const bullsText = `${bulls} ${pluralize(bulls, "бык", "быка", "быков")}`;
+  const cowsText = `${cows} ${pluralize(cows, "корова", "коровы", "коров")}`;
+  return `${bullsText}, ${cowsText}`;
+}
+
+function createHistoryItem(attempt, index) {
+  const li = document.createElement("li");
+  li.className = "history-item";
+
+  const isWin = attempt.bulls === DIGITS_COUNT;
+  if (isWin) {
+    li.classList.add("history-item--win");
+  }
+
+  const guessSpan = document.createElement("span");
+  guessSpan.className = "history-item__guess";
+  guessSpan.textContent = `${index + 1}. ${attempt.guess}`;
+
+  const resultSpan = document.createElement("span");
+  resultSpan.className = "history-item__result";
+  resultSpan.textContent = isWin ? "🏆 Победа!" : formatResult(attempt);
+
+  li.append(guessSpan, resultSpan);
+  return li;
+}
+
+function render() {
+  dom.attemptsCount.textContent = String(state.history.length);
+
+  dom.historyList.innerHTML = "";
+  const fragment = document.createDocumentFragment();
+  state.history.forEach((attempt, index) => {
+    fragment.appendChild(createHistoryItem(attempt, index));
+  });
+  dom.historyList.appendChild(fragment);
+
+  dom.input.disabled = state.isOver;
+  dom.checkBtn.disabled = state.isOver;
+
+  dom.historyList.scrollTop = dom.historyList.scrollHeight;
+}
+
+function showError(message) {
+  dom.errorMessage.textContent = message;
+}
+
+function clearError() {
+  dom.errorMessage.textContent = "";
+}
+
 function startNewGame() {
   state.secret = createSecretNumber();
   state.history = [];
