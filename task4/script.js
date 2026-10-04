@@ -158,6 +158,10 @@ function handleGuess() {
 
   if (bulls === DIGITS_COUNT) {
     state.isOver = true;
+    showError(
+      `🎉 Победа! Угадано за ${state.history.length} ` +
+      `${pluralize(state.history.length, "попытку", "попытки", "попыток")}.`
+    );
   }
 
   dom.input.value = "";
