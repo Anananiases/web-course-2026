@@ -167,3 +167,14 @@ function handleGuess() {
     dom.input.focus();
   }
 }
+function init() {
+  dom.checkBtn.addEventListener("click", handleGuess);
+  dom.newGameBtn.addEventListener("click", startNewGame);
+  dom.input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleGuess();
+  });
+
+  startNewGame();
+}
+
+document.addEventListener("DOMContentLoaded", init);
