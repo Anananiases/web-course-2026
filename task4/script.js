@@ -23,3 +23,26 @@ function createSecretNumber() {
 
   return digits.join("");
 }
+
+function validateGuess(raw) {
+  const value = String(raw).trim();
+
+  if (value.length === 0) {
+    return { valid: false, error: "Введите число." };
+  }
+
+  if (!/^\d+$/.test(value)) {
+    return { valid: false, error: "Только цифры, без букв и символов." };
+  }
+
+  if (value.length !== DIGITS_COUNT) {
+    return { valid: false, error: `Нужно ровно ${DIGITS_COUNT} цифры.` };
+  }
+
+  const uniqueDigits = new Set(value);
+  if (uniqueDigits.size !== DIGITS_COUNT) {
+    return { valid: false, error: "Цифры не должны повторяться." };
+  }
+
+  return { valid: true };
+}
