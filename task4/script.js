@@ -2,6 +2,11 @@
 
 const DIGITS_COUNT = 4;
 const DIGITS_RANGE = 10;
+const state = {
+  secret: "",
+  history: [],
+  isOver: false,
+};
 
 const dom = {
   input: document.getElementById("guess-input"),
@@ -60,4 +65,45 @@ function countBullsAndCows(secret, guess) {
   }
 
   return { bulls, cows };
+}
+
+function startNewGame() {
+  state.secret = createSecretNumber();
+  state.history = [];
+  state.isOver = false;
+
+  dom.input.value = "";
+  dom.input.disabled = false;
+  dom.checkBtn.disabled = false;
+
+  render();
+  dom.input.focus();
+}
+
+function handleGuess() {
+  if (state.isOver) return;
+
+  const raw = dom.input.value;
+  const { valid, error } = validateGuess(raw);
+
+  if (!valid) {
+    showError(error);
+    return;
+  }
+
+  clearError();
+
+  const { bulls, cows } = countBullsAndCows(state.secret, raw);
+  state.history.push({ guess: raw, bulls, cows });
+
+  if (bulls === DIGITS_COUNT) {
+    state.isOver = true;
+  }
+
+  dom.input.value = "";
+  render();
+
+  if (!state.isOver) {
+    dom.input.focus();
+  }
 }
