@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #1e1e2f;
+    color: #eee;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+}
+
+.game__title {
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.game__info {
+    font-size: 18px;
+}
+
+.game__level b {
+    color: #ffd166;
+}
+
+
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    width: 320px;
+    height: 320px;
+    padding: 8px;
+    background: #0f0f1a;
+    border-radius: 50%;             
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+.sector {
+    border: none;
+    cursor: pointer;
+    opacity: 0.55;                  
+    transition: opacity 0.12s, transform 0.12s, filter 0.12s;
+    outline: none;
+}
+
+
+.sector--green  { background: #2ecc71; border-top-left-radius:     100%; }
+.sector--red    { background: #e74c3c; border-top-right-radius:    100%; }
+.sector--yellow { background: #f1c40f; border-bottom-left-radius:  100%; }
+.sector--blue   { background: #3498db; border-bottom-right-radius: 100%; }
+
+
+.sector.active {
+    opacity: 1;
+    filter: brightness(1.6);
+    transform: scale(1.02);
+}
