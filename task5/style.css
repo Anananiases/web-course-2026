@@ -69,3 +69,34 @@ body {
     filter: brightness(1.6);
     transform: scale(1.02);
 }
+
+.sector:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.sector:not(:disabled):hover {
+    filter: brightness(1.2);
+}
+
+.btn {
+    padding: 12px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e1e2f;
+    background: #ffd166;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.15s;
+}
+
+.btn:hover  { background: #ffdd88; }
+.btn:active { transform: scale(0.96); }
+
+.game__status {
+    min-height: 24px;
+    font-size: 16px;
+    color: #aaa;
+    text-align: center;
+}
