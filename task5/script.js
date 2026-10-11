@@ -74,3 +74,38 @@ async function playSequence() {
 function setStatus(text) {
     statusEl.textContent = text;
 }
+
+function handleSectorClick(event) {
+    // Игнорируем клики вне фазы ввода
+    if (game.phase !== 'input') return;
+
+    const index = Number(event.currentTarget.dataset.index);
+
+    // Короткая визуальная вспышка на клик игрока
+    flashSector(index, 250);
+
+    const expected = game.sequence[game.playerIndex];
+
+    if (index !== expected) {
+        // Ошибка — конец игры
+        gameOver();
+        return;
+    }
+
+    game.playerIndex++;
+
+    if (game.playerIndex === game.sequence.length) {
+        // Раунд пройден — следующий уровень
+        nextRound();
+    }
+}
+
+function nextRound() {
+    game.phase = 'wait';          // временная фаза, чтобы клики не проходили
+    setStatus('Верно! Готовим следующий раунд...');
+    // Пауза, потом добавляем шаг и снова показываем
+    schedule(async () => {
+        addStep();
+        await playSequence();
+    }, 800);
+}
