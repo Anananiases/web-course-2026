@@ -48,3 +48,29 @@ function addStep() {
 function updateLevel() {
     levelEl.textContent = game.level;
 }
+
+async function flashSector(index, ms = 450) {
+    const el = sectorEls[index];
+    el.classList.add('active');
+    await delay(ms);
+    el.classList.remove('active');
+}
+
+async function playSequence() {
+    game.phase = 'showing';
+    setStatus('Смотрите внимательно...');
+
+    await delay(500);
+
+    for (const index of game.sequence) {
+        await flashSector(index, 450);
+        await delay(200); 
+        }
+ game.phase = 'input';
+    game.playerIndex = 0;
+    setStatus(`Ваш ход. Повторите ${game.sequence.length} шаг(а).`);
+}
+
+function setStatus(text) {
+    statusEl.textContent = text;
+}
