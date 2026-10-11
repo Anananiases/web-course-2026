@@ -76,18 +76,18 @@ function setStatus(text) {
 }
 
 function handleSectorClick(event) {
-    // Игнорируем клики вне фазы ввода
+    
     if (game.phase !== 'input') return;
 
     const index = Number(event.currentTarget.dataset.index);
 
-    // Короткая визуальная вспышка на клик игрока
+    
     flashSector(index, 250);
 
     const expected = game.sequence[game.playerIndex];
 
     if (index !== expected) {
-        // Ошибка — конец игры
+        
         gameOver();
         return;
     }
@@ -95,17 +95,53 @@ function handleSectorClick(event) {
     game.playerIndex++;
 
     if (game.playerIndex === game.sequence.length) {
-        // Раунд пройден — следующий уровень
+        
         nextRound();
     }
 }
 
 function nextRound() {
-    game.phase = 'wait';          // временная фаза, чтобы клики не проходили
+    game.phase = 'wait';         
     setStatus('Верно! Готовим следующий раунд...');
-    // Пауза, потом добавляем шаг и снова показываем
+    
     schedule(async () => {
         addStep();
         await playSequence();
     }, 800);
 }
+
+
+
+function gameOver() {
+    clearAllTimers();               
+    game.phase = 'gameover';
+    setStatus(`Вы дошли до уровня ${game.level}. Нажмите «Старт», чтобы сыграть снова.`);
+    setBoardEnabled(false);
+}
+
+function startGame() {
+    clearAllTimers();               
+    resetState();
+    setBoardEnabled(true);
+    addStep();                      
+    schedule(() => playSequence(), 300);
+}
+
+function resetState() {
+    game.sequence = [];
+    game.playerIndex = 0;
+    game.level = 0;
+    game.phase = 'idle';
+    updateLevel();
+}
+
+function setBoardEnabled(enabled) {
+    sectorEls.forEach(el => {
+        el.disabled = !enabled;
+        el.style.cursor = enabled ? 'pointer' : 'not-allowed';
+    });
+}
+
+
+sectorEls.forEach(el => el.addEventListener('click', handleSectorClick));
+startBtn.addEventListener('click', startGame);
