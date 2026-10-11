@@ -33,3 +33,18 @@ function clearAllTimers() {
     game.timers.forEach(clearTimeout);
     game.timers = [];
 }
+
+function randomIndex() {
+    return Math.floor(Math.random() * 4);
+}
+
+function addStep() {
+    game.sequence.push(randomIndex());
+    game.level = game.sequence.length;
+    game.playerIndex = 0;
+    updateLevel();
+}
+
+function updateLevel() {
+    levelEl.textContent = game.level;
+}
