@@ -29,7 +29,7 @@
   --transition: 0.2s ease;
 }
 
-/* ============ База ============ */
+
 body {
   margin: 0;
   padding: 24px 16px 48px;
@@ -45,7 +45,7 @@ body {
   margin: 0 auto;
 }
 
-/* ============ Заголовок ============ */
+
 h1 {
   font-size: 26px;
   font-weight: 700;
@@ -66,7 +66,7 @@ h1::after {
   border-radius: 3px;
 }
 
-/* ============ Форма ввода ============ */
+
 .todo-form {
   display: flex;
   gap: 10px;
@@ -124,7 +124,7 @@ h1::after {
   transform: translateY(1px);
 }
 
-/* ============ Счётчик ============ */
+
 .counter {
   font-size: 14px;
   text-align: center;
@@ -137,7 +137,7 @@ h1::after {
   color: var(--primary);
 }
 
-/* ============ Фильтры ============ */
+
 .filters {
   display: flex;
   gap: 8px;
@@ -171,7 +171,7 @@ h1::after {
   box-shadow: var(--shadow-sm);
 }
 
-/* ============ Список задач ============ */
+
 .todo-list {
   list-style: none;
   padding: 0;
@@ -214,7 +214,7 @@ h1::after {
   color: var(--text-muted);
 }
 
-/* ============ Чекбокс ============ */
+
 .todo-item input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -250,7 +250,7 @@ h1::after {
   transform: rotate(45deg);
 }
 
-/* ============ Кнопка удаления ============ */
+
 .todo-item button.delete {
   min-height: 38px;
   padding: 0 14px;
@@ -271,7 +271,7 @@ h1::after {
   box-shadow: 0 4px 12px rgba(194, 59, 94, 0.3);
 }
 
-/* ============ Пустой список ============ */
+
 .todo-list:empty::after {
   content: "Пока пусто. Добавьте первую задачу ✿";
   display: block;
@@ -281,7 +281,7 @@ h1::after {
   padding: 24px 0;
 }
 
-/* ============ Анимация появления ============ */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -293,7 +293,7 @@ h1::after {
   }
 }
 
-/* ============ Мобильная адаптация ============ */
+
 @media (max-width: 480px) {
   body {
     padding: 16px 12px 32px;
@@ -324,7 +324,7 @@ h1::after {
   }
 }
 
-/* ============ Планшет+ ============ */
+
 @media (min-width: 768px) {
   body {
     padding: 40px 20px 60px;
