@@ -56,6 +56,25 @@ async function flashSector(index, ms = 450) {
     el.classList.remove('active');
 }
 
+
+
+function delay(ms) {
+    return new Promise(resolve => schedule(resolve, ms));
+}
+
+async function flashSector(index, ms = 450) {
+    const el = sectorEls[index];
+    el.classList.add('active');
+    await delay(ms);
+    el.classList.remove('active');
+}
+
+function setStatus(text) {
+    statusEl.textContent = text;
+}
+
+
+
 async function playSequence() {
     game.phase = 'showing';
     setStatus('Смотрите внимательно...');
