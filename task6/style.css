@@ -107,17 +107,12 @@ canvas {
 .overlay__title {
   font-size: 1.8rem;
   margin-bottom: 8px;
-  color: var(--danger);
+  color: var(--text);
 }
 
 .overlay__text {
   color: var(--muted);
   margin-bottom: 20px;
-}
-
-.overlay__text strong {
-  color: var(--text);
-  font-size: 1.2rem;
 }
 
 .btn {

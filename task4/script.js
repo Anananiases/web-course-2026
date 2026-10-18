@@ -1,7 +1,8 @@
 "use strict";
 
-const DIGITS_COUNT = 4;
+const DIGITS_COUNT = 5;
 const DIGITS_RANGE = 10;
+const BULLS_all=2;
 const state = {
   secret: "",
   history: [],
@@ -126,7 +127,7 @@ function showError(message) {
 function clearError() {
   dom.errorMessage.textContent = "";
 }
-
+function checkWin(bulls){return bulls>= BULLS_all;}
 function startNewGame() {
   state.secret = createSecretNumber();
   state.history = [];
@@ -156,11 +157,11 @@ function handleGuess() {
   const { bulls, cows } = countBullsAndCows(state.secret, raw);
   state.history.push({ guess: raw, bulls, cows });
 
-  if (bulls === DIGITS_COUNT) {
+  if (checkWin(bulls)) {
     state.isOver = true;
     showError(
       `🎉 Победа! Угадано за ${state.history.length} ` +
-      `${pluralize(state.history.length, "попытку", "попытки", "попыток")}.`
+      `${pluralize(state.history.length, "попытку", "попытки", "попыток")}.` + `само число ${state.secret}`
     );
   }
 
