@@ -107,10 +107,73 @@
       return false;
     }
   }
-  
+
+  // ============================================================
+  // VIEW — только отрисовка
+  // ============================================================
+  class SnakeView {
+    constructor(canvas, config, dom) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.config = config;
+      this.dom = dom;
+      this.resizeCanvas();
+    }
+
+    resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const cssSize = this.canvas.clientWidth || this.config.canvasSize;
+      this.canvas.width = cssSize * dpr;
+      this.canvas.height = cssSize * dpr;
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      this.scale = cssSize / this.config.canvasSize;
+      this.cell = (this.config.canvasSize / this.config.gridSize) * this.scale;
+    }
+
+    clear() {
+      this.ctx.fillStyle = this.config.colors.background;
+      this.ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
+      this.drawGrid();
+    }
+
+    drawGrid() {
+      const { gridSize } = this.config;
+      this.ctx.strokeStyle = this.config.colors.grid;
+      this.ctx.lineWidth = 1;
+      for (let i = 1; i < gridSize; i++) {
+        const pos = i * this.cell;
+        this.ctx.beginPath();
+        this.ctx.moveTo(pos, 0);
+        this.ctx.lineTo(pos, gridSize * this.cell);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, pos);
+        this.ctx.lineTo(gridSize * this.cell, pos);
+        this.ctx.stroke();
+      }
+    }
+
+    drawApple(apple) {
+      if (!apple) return;
+      const { cell } = this;
+      const cx = apple.x * cell + cell / 2;
+      const cy = apple.y * cell + cell / 2;
+      const r = cell * 0.36;
+
+      this.ctx.fillStyle = this.config.colors.apple;
+      this.ctx.beginPath();
+      this.ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+  }
+
   function init() {
+    const canvas = document.getElementById('game');
+    if (!canvas) return;
     const model = new SnakeModel(CONFIG);
-    console.log('Model state:', model.snake, model.direction);
+    const view = new SnakeView(canvas, CONFIG, {});
+    view.clear();
+    view.drawApple(model.apple);
   }
 
   document.addEventListener('DOMContentLoaded', init);
