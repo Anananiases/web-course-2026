@@ -23,8 +23,31 @@
     right: Object.freeze({ x: 1,  y: 0  }),
   });
 
+  
+  class SnakeModel {
+    constructor(config) {
+      this.config = config;
+      this.reset();
+    }
+
+    reset() {
+      const center = Math.floor(this.config.gridSize / 2);
+      this.snake = [
+        { x: center,     y: center },
+        { x: center - 1, y: center },
+        { x: center - 2, y: center },
+      ];
+      this.direction = DIRECTIONS.right;
+      this.pendingDirection = DIRECTIONS.right;
+      this.score = 0;
+      this.gameOver = false;
+      this.apple = null;
+    }
+  }
+
   function init() {
-    console.log('Snake init: каркас готов');
+    const model = new SnakeModel(CONFIG);
+    console.log('Model state:', model.snake, model.direction);
   }
 
   document.addEventListener('DOMContentLoaded', init);
