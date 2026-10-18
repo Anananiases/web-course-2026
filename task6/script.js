@@ -165,15 +165,50 @@
       this.ctx.arc(cx, cy, r, 0, Math.PI * 2);
       this.ctx.fill();
     }
+        drawSnake(snake) {
+      const { cell } = this;
+      const radius = cell * 0.22;
+
+      snake.forEach((segment, index) => {
+        const isHead = index === 0;
+        this.ctx.fillStyle = isHead
+          ? this.config.colors.snakeHead
+          : this.config.colors.snakeBody;
+
+        const x = segment.x * cell + 1;
+        const y = segment.y * cell + 1;
+        const w = cell - 2;
+        const h = cell - 2;
+
+        this.roundRect(x, y, w, h, radius);
+        this.ctx.fill();
+      });
+    }
+
+    roundRect(x, y, w, h, r) {
+      const ctx = this.ctx;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    render(model) {
+      this.clear();
+      this.drawApple(model.apple);
+      this.drawSnake(model.snake);
+    }
   }
 
-  function init() {
+    function init() {
     const canvas = document.getElementById('game');
     if (!canvas) return;
     const model = new SnakeModel(CONFIG);
     const view = new SnakeView(canvas, CONFIG, {});
-    view.clear();
-    view.drawApple(model.apple);
+    view.render(model);
   }
 
   document.addEventListener('DOMContentLoaded', init);
