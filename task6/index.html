@@ -19,11 +19,12 @@
     <div class="board">
       <canvas id="game" width="600" height="600"></canvas>
 
-      <div class="overlay hidden" id="overlay">
+      <!-- Оверлей виден сразу (без hidden) для стартового экрана -->
+      <div class="overlay" id="overlay">
         <div class="overlay__content">
-          <h2 class="overlay__title" id="overlay-title">Игра окончена</h2>
-          <p class="overlay__text">Итоговый счёт: <strong id="final-score">0</strong></p>
-          <button class="btn" id="restart-btn" type="button">Начать заново</button>
+          <h2 class="overlay__title" id="overlay-title">Змейка</h2>
+          <p class="overlay__text" id="overlay-text">Нажмите «Старт», чтобы начать игру</p>
+          <button class="btn" id="restart-btn" type="button">Старт</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
 (() => {
   'use strict';
 
+  // ============================================================
+  // КОНСТАНТЫ
+  // ============================================================
   const CONFIG = Object.freeze({
     canvasSize: 600,
     gridSize: 20,
@@ -23,8 +26,10 @@
     right: Object.freeze({ x: 1,  y: 0  }),
   });
 
-  
-    class SnakeModel {
+  // ============================================================
+  // MODEL — состояние и логика игры
+  // ============================================================
+  class SnakeModel {
     constructor(config) {
       this.config = config;
       this.reset();
@@ -165,7 +170,8 @@
       this.ctx.arc(cx, cy, r, 0, Math.PI * 2);
       this.ctx.fill();
     }
-        drawSnake(snake) {
+
+    drawSnake(snake) {
       const { cell } = this;
       const radius = cell * 0.22;
 
@@ -201,14 +207,26 @@
       this.drawApple(model.apple);
       this.drawSnake(model.snake);
     }
-        updateScore(score) {
+
+    updateScore(score) {
       if (this.dom.score) this.dom.score.textContent = String(score);
+    }
+
+    showStartScreen() {
+      if (!this.dom.overlay) return;
+      this.dom.overlayTitle.textContent = 'Змейка';
+      this.dom.overlayTitle.style.color = 'var(--text)';
+      this.dom.overlayText.textContent = 'Нажмите «Старт», чтобы начать игру';
+      this.dom.restartBtn.textContent = 'Старт';
+      this.dom.overlay.classList.remove('hidden');
     }
 
     showGameOver(score) {
       if (!this.dom.overlay) return;
-      this.dom.finalScore.textContent = String(score);
       this.dom.overlayTitle.textContent = 'Игра окончена';
+      this.dom.overlayTitle.style.color = 'var(--danger)';
+      this.dom.overlayText.textContent = `Итоговый счёт: ${score}`;
+      this.dom.restartBtn.textContent = 'Начать заново';
       this.dom.overlay.classList.remove('hidden');
     }
 
@@ -216,7 +234,6 @@
       if (this.dom.overlay) this.dom.overlay.classList.add('hidden');
     }
   }
-
 
   // ============================================================
   // CONTROLLER — игровой цикл и ввод
@@ -330,6 +347,9 @@
     }
   }
 
+  // ============================================================
+  // ТОЧКА ВХОДА
+  // ============================================================
   function init() {
     const canvas = document.getElementById('game');
     if (!canvas) return;
@@ -338,7 +358,7 @@
       score: document.getElementById('score'),
       overlay: document.getElementById('overlay'),
       overlayTitle: document.getElementById('overlay-title'),
-      finalScore: document.getElementById('final-score'),
+      overlayText: document.getElementById('overlay-text'),
       restartBtn: document.getElementById('restart-btn'),
     };
 
@@ -346,7 +366,9 @@
     const view = new SnakeView(canvas, CONFIG, dom);
     const controller = new SnakeController(model, view);
 
-    controller.restart();
+    // Инициализируем стартовый экран вместо автостарта
+    view.showStartScreen();
+    view.render(model);
   }
 
   document.addEventListener('DOMContentLoaded', init);
