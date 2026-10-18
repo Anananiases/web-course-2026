@@ -217,7 +217,120 @@
     }
   }
 
-     function init() {
+
+  // ============================================================
+  // CONTROLLER — игровой цикл и ввод
+  // ============================================================
+  class SnakeController {
+    constructor(model, view) {
+      this.model = model;
+      this.view = view;
+
+      this.lastMoveTime = 0;
+      this.rafId = null;
+      this.isRunning = false;
+      this.isPaused = false;
+
+      this.boundLoop = this.loop.bind(this);
+
+      this.setupInput();
+      this.setupRestart();
+      this.setupResize();
+
+      this.view.render(this.model);
+      this.view.updateScore(this.model.score);
+    }
+
+    setupInput() {
+      document.addEventListener('keydown', (event) => {
+        const dir = this.mapKeyToDirection(event.key);
+        if (dir) {
+          event.preventDefault();
+          this.model.setDirection(dir);
+          return;
+        }
+        if (event.code === 'Space') {
+          event.preventDefault();
+          this.togglePause();
+        }
+      });
+    }
+
+    mapKeyToDirection(key) {
+      switch (key) {
+        case 'ArrowUp':    return DIRECTIONS.up;
+        case 'ArrowDown':  return DIRECTIONS.down;
+        case 'ArrowLeft':  return DIRECTIONS.left;
+        case 'ArrowRight': return DIRECTIONS.right;
+        default:           return null;
+      }
+    }
+
+    setupRestart() {
+      if (this.view.dom.restartBtn) {
+        this.view.dom.restartBtn.addEventListener('click', () => this.restart());
+      }
+    }
+
+    setupResize() {
+      window.addEventListener('resize', () => {
+        this.view.resizeCanvas();
+        this.view.render(this.model);
+      });
+    }
+
+    togglePause() {
+      if (!this.isRunning || this.model.gameOver) return;
+      this.isPaused = !this.isPaused;
+    }
+
+    restart() {
+      this.stopLoop();
+      this.model.reset();
+      this.view.hideGameOver();
+      this.view.updateScore(this.model.score);
+      this.view.render(this.model);
+
+      this.isRunning = true;
+      this.isPaused = false;
+      this.lastMoveTime = performance.now();
+      this.rafId = requestAnimationFrame(this.boundLoop);
+    }
+
+    stopLoop() {
+      if (this.rafId !== null) {
+        cancelAnimationFrame(this.rafId);
+        this.rafId = null;
+      }
+      this.isRunning = false;
+    }
+
+    loop(timestamp) {
+      if (!this.isRunning) return;
+
+      const delta = timestamp - this.lastMoveTime;
+
+      if (!this.isPaused && !this.model.gameOver && delta >= CONFIG.moveIntervalMs) {
+        this.lastMoveTime = timestamp - (delta % CONFIG.moveIntervalMs);
+        this.update();
+      }
+
+      this.view.render(this.model);
+      this.rafId = requestAnimationFrame(this.boundLoop);
+    }
+
+    update() {
+      const event = this.model.step();
+      this.view.updateScore(this.model.score);
+
+      if (event === 'dead') {
+        this.view.showGameOver(this.model.score);
+        this.stopLoop();
+      }
+    }
+  }
+
+  function init() {
     const canvas = document.getElementById('game');
     if (!canvas) return;
 
@@ -231,9 +344,9 @@
 
     const model = new SnakeModel(CONFIG);
     const view = new SnakeView(canvas, CONFIG, dom);
-    view.render(model);
-    view.updateScore(model.score);
-    view.showGameOver(42); // временная проверка
+    const controller = new SnakeController(model, view);
+
+    controller.restart();
   }
 
   document.addEventListener('DOMContentLoaded', init);
