@@ -201,14 +201,39 @@
       this.drawApple(model.apple);
       this.drawSnake(model.snake);
     }
+        updateScore(score) {
+      if (this.dom.score) this.dom.score.textContent = String(score);
+    }
+
+    showGameOver(score) {
+      if (!this.dom.overlay) return;
+      this.dom.finalScore.textContent = String(score);
+      this.dom.overlayTitle.textContent = 'Игра окончена';
+      this.dom.overlay.classList.remove('hidden');
+    }
+
+    hideGameOver() {
+      if (this.dom.overlay) this.dom.overlay.classList.add('hidden');
+    }
   }
 
-    function init() {
+     function init() {
     const canvas = document.getElementById('game');
     if (!canvas) return;
+
+    const dom = {
+      score: document.getElementById('score'),
+      overlay: document.getElementById('overlay'),
+      overlayTitle: document.getElementById('overlay-title'),
+      finalScore: document.getElementById('final-score'),
+      restartBtn: document.getElementById('restart-btn'),
+    };
+
     const model = new SnakeModel(CONFIG);
-    const view = new SnakeView(canvas, CONFIG, {});
+    const view = new SnakeView(canvas, CONFIG, dom);
     view.render(model);
+    view.updateScore(model.score);
+    view.showGameOver(42); // временная проверка
   }
 
   document.addEventListener('DOMContentLoaded', init);
