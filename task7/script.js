@@ -68,3 +68,33 @@ function hideError() {
   errorMessageEl.classList.add("hidden");
   errorMessageEl.textContent = "";
 }
+
+function render() {
+  const filtered = filterPosts(state.posts, state.searchQuery);
+
+  postsEl.innerHTML = filtered
+    .map((post) => createPostCard(post))
+    .join("");
+
+  const finished = !state.hasMore && filtered.length > 0;
+  endMessageEl.classList.toggle("hidden", !finished);
+}
+
+function createPostCard(post) {
+  return `
+    <article class="post-card">
+      <span class="meta">Автор #${post.userId} · Пост #${post.id}</span>
+      <h2>${escapeHtml(post.title)}</h2>
+      <p>${escapeHtml(post.body)}</p>
+    </article>
+  `;
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
