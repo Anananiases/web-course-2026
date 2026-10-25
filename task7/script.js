@@ -133,3 +133,12 @@ function onWindowScroll() {
     loadNextPage();
   }
 }
+
+function init() {
+  searchEl.addEventListener("input", onSearchInput);
+  window.addEventListener("scroll", onWindowScroll);
+
+  loadNextPage();
+}
+
+init();
