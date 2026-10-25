@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f5f5f7;
+  color: #1f1f1f;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+#search {
+  flex: 1 1 240px;
+  min-height: 44px;
+  max-width: 420px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #d0d0d5;
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search:focus {
+  outline: none;
+  border-color: #4a7dff;
+  box-shadow: 0 0 0 3px rgba(74, 125, 255, 0.18);
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+.post-card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}
+
+.post-card .meta {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.post-card p {
+  margin: 0;
+  line-height: 1.5;
+  color: #444;
+}
+
+.loader {
+  margin: 24px auto;
+  text-align: center;
+  font-weight: 600;
+  color: #4a7dff;
+}
+
+.end-message {
+  margin: 24px auto;
+  text-align: center;
+  color: #888;
+}
+
+.error-message {
+  margin: 24px auto;
+  padding: 14px 18px;
+  text-align: center;
+  color: #b3261e;
+  background: #fde7e5;
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
+}
