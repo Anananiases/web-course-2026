@@ -121,3 +121,15 @@ function onSearchInput(event) {
     searchDebounceId = null;
   }, 300);
 }
+
+
+
+const SCROLL_THRESHOLD = 200;
+
+function onWindowScroll() {
+  const scrollBottom = window.innerHeight + window.scrollY;
+
+  if (scrollBottom >= document.body.offsetHeight - SCROLL_THRESHOLD) {
+    loadNextPage();
+  }
+}
