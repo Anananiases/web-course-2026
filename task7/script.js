@@ -98,3 +98,11 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+
+function filterPosts(posts, query) {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return posts;
+  return posts.filter((post) =>
+    post.title.toLowerCase().includes(normalized)
+  );
+}
