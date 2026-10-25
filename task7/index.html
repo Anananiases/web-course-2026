@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Лаба 7 — Лента постов</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Лента постов</h1>
+    <input type="text" id="search" placeholder="Поиск по заголовку…">
+  </header>
+
+  <main>
+    <div id="posts" class="posts"></div>
+    <div id="loader" class="loader hidden">Загрузка…</div>
+    <p id="end-message" class="end-message hidden">Больше постов нет</p>
+    <p id="error-message" class="error-message hidden"></p>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
