@@ -106,3 +106,18 @@ function filterPosts(posts, query) {
     post.title.toLowerCase().includes(normalized)
   );
 }
+let searchDebounceId = null;
+
+function onSearchInput(event) {
+  const value = event.target.value;
+
+  if (searchDebounceId) {
+    clearTimeout(searchDebounceId);
+  }
+
+  searchDebounceId = setTimeout(() => {
+    state.searchQuery = value;
+    render();
+    searchDebounceId = null;
+  }, 300);
+}
