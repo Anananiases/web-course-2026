@@ -1,21 +1,38 @@
-const BASE_URL = 'http://localhost:3001';
+// Определяем, открыт ли сайт локально (через Live Server) или на GitHub Pages
+const isLocalhost = 
+  window.location.hostname === 'localhost' || 
+  window.location.hostname === '127.0.0.1' || 
+  window.location.hostname === '';
+
+// Если вы задеплоите сервер на Render.com, вставьте его ссылку сюда:
+const PRODUCTION_API_URL = 'https://your-server-url.onrender.com'; 
+
+const BASE_URL = isLocalhost ? 'http://localhost:3001' : PRODUCTION_API_URL;
 
 async function request(path, options = {}) {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
-    ...options,
-  });
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+      ...options,
+    });
 
-  if (res.status === 204) return null;
+    if (res.status === 204) return null;
 
-  const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : null;
 
-  if (!res.ok) {
-    const message = data && data.error ? data.error : `HTTP ${res.status}`;
-    throw new Error(message);
+    if (!res.ok) {
+      const message = data && data.error ? data.error : `HTTP ${res.status}`;
+      throw new Error(message);
+    }
+    return data;
+  } catch (err) {
+    // Если мы на GitHub Pages, а сервер локальный — выдаем понятную ошибку
+    if (!isLocalhost && err.message === 'Failed to fetch') {
+      throw new Error('Сервер не запущен. Для проверки запустите сервер локально (npm start).');
+    }
+    throw err;
   }
-  return data;
 }
 
 function buildQuery(params) {
