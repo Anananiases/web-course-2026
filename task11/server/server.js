@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { initDatabase } = require('./db');
-const categoriesRouter = require('./routes/categories'); // <-- ДОБАВИТЬ
+const categoriesRouter = require('./routes/categories');
+const transactionsRouter = require('./routes/transactions');
+const { errorHandler, notFound } = require('./middleware/errorHandler');
 const PORT = 3001;
 
 initDatabase();
@@ -14,7 +16,11 @@ app.get('/', (req, res) => {
   res.send('Server is running!');
 });
 
-app.use('/categories', categoriesRouter); // <-- ДОБАВИТЬ
+app.use('/categories', categoriesRouter);
+app.use('/transactions', transactionsRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Zen-Money server started on http://localhost:${PORT}`);
