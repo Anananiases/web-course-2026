@@ -1,0 +1,88 @@
+:root {
+  --bg: #f4f6f8;
+  --card-bg: #ffffff;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --income: #10b981;
+  --expense: #ef4444;
+  --accent: #3b82f6;
+  --border: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.header {
+  background: var(--card-bg);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.panel--wide { grid-column: 1 / -1; }
+
+h2 { margin-top: 0; font-size: 1.25rem; }
+
+.summary { display: flex; justify-content: space-between; margin: 0; }
+.summary div { text-align: center; }
+.summary dt { font-size: 0.875rem; color: var(--muted); }
+.summary dd { margin: 0.25rem 0 0; font-size: 1.25rem; font-weight: bold; }
+#summary-income { color: var(--income); }
+#summary-expense { color: var(--expense); }
+.negative { color: var(--expense) !important; }
+
+form { display: flex; flex-direction: column; gap: 1rem; }
+label { display: flex; flex-direction: column; font-size: 0.875rem; color: var(--muted); gap: 0.25rem; }
+input, select, button {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 1rem;
+  min-height: 44px;
+}
+button {
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  border: none;
+  transition: background 0.2s;
+}
+button:hover { background: #2563eb; }
+
+.message { color: var(--muted); font-size: 0.875rem; margin-top: 1rem; }
+.message--error { color: var(--expense); }
+
+.tx-list { list-style: none; padding: 0; margin: 0; }
+.tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.tx__info { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.tx--income strong { color: var(--income); }
+.tx--expense strong { color: var(--expense); }
+.tx__actions { display: flex; gap: 0.5rem; }
+.tx__actions button { padding: 0.5rem 1rem; font-size: 0.875rem; min-height: auto; }
