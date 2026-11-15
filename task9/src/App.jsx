@@ -1,19 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TodoForm from './components/TodoForm.jsx'
 import Filters from './components/Filters.jsx'
 import Stats from './components/Stats.jsx'
 import TodoList from './components/TodoList.jsx'
 import SortSelect from './components/SortSelect.jsx'
 
+const STORAGE_KEY = 'todo-react-items'
 let nextId = 1
 
+function loadTodos() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(loadTodos)
   const [filter, setFilter] = useState('all')
   const [sortBy, setSortBy] = useState('new-first')
 
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+  }, [todos])
+
   function addTodo(text, completed) {
-    const newTodo = { id: nextId++, text, completed, createdAt: Date.now() }
+    const maxId = todos.reduce((max, t) => Math.max(max, t.id), 0)
+    nextId = maxId + 1
+    const newTodo = {
+      id: nextId,
+      text,
+      completed,
+      createdAt: Date.now(),
+    }
     setTodos((prev) => [...prev, newTodo])
   }
 
