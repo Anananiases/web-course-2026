@@ -1,4 +1,6 @@
-function TodoItem({ todo, onToggle, onDelete }) {
+import { memo } from 'react'
+
+const TodoItem = memo(function TodoItem({ todo, onToggle, onDelete }) {
   return (
     <li className={`todo-item${todo.completed ? ' completed' : ''}`}>
       <input
@@ -17,6 +19,6 @@ function TodoItem({ todo, onToggle, onDelete }) {
       </button>
     </li>
   )
-}
+})
 
 export default TodoItem
